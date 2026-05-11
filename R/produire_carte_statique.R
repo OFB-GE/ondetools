@@ -137,8 +137,8 @@ produire_carte_statique <- function(onde_df_mois = NULL,
 
 
   ggplot2::ggplot() +
-    ggplot2::geom_sf(data = pays_front , fill = "grey90") +
-    ggplot2::geom_sf(data = dptFR_shp , fill = "floralwhite") +
+    ggplot2::geom_sf(data = pays_front , fill = "lightgrey") +
+    ggplot2::geom_sf(data = dptFR_shp , fill = "grey95") +
     ggplot2::geom_sf(data = dpt_shp,
                      fill = "grey70",
                      lwd = 1.2) +
@@ -194,7 +194,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
       legend.text = ggplot2::element_text(size = 10),
       legend.title =  ggplot2::element_text(face = "bold",
                                             size = 9),
-      # legend.background = element_rect(colour = NA),
+      legend.background = element_rect(colour = NA),
       plot.title = ggplot2::element_text(face = "bold",
                                          size = 10),
       plot.subtitle = ggplot2::element_text(face = "italic",
