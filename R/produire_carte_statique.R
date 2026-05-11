@@ -76,7 +76,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
       }
     })
 
-
+  # ajout des pays frontaliers pour gerer les departements avec de la terre
   pays_front <- sf::read_sf(dsn = "https://gisco-services.ec.europa.eu/distribution/v2/countries/geojson/CNTR_RG_01M_2024_4326.geojson") %>%
     dplyr::filter(NAME_FREN %in% c("Italie", "Suisse", "Luxembourg", "Espagne", "Belgique", "Allemagne", "Andorre", "France")) %>%
     sf::st_transform(crs = 2154)
@@ -121,20 +121,6 @@ produire_carte_statique <- function(onde_df_mois = NULL,
                observations = stringr::str_wrap(lib_ecoul4mod, 12),
                couleurs = Couleur_4mod)
     }
- # browser()
-
-  # if(code_departement %in% c(08)){
-  #   fond <- ggplot2::ggplot() +
-  #     ggplot2::geom_rect(data = dpt_shp,
-  #                        xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf,
-  #                        fill = "black")
-  # } else {
-  #   fond <- ggplot2::ggplot() +
-  #     ggplot2::geom_rect(data = dpt_shp,
-  #                        xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf,
-  #                        fill = "lightblue")
-  # }
-
 
   ggplot2::ggplot() +
     ggplot2::geom_sf(data = pays_front , fill = "lightgrey") +
@@ -190,7 +176,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
     ggplot2::labs(caption = paste("Source: ONDE (OFB)\n \u00a9OFB", format(Sys.time(), '%Y'), "- Date d\'\u00e9dition:", format(Sys.time(), '%d/%m/%Y'))) +
     ggplot2::theme_void() +
     ggplot2::theme(
-      legend.key = ggplot2::element_rect(fill = NA),
+      legend.key = ggplot2::element_rect(fill = NA), # retrait fond sur legende
       legend.text = ggplot2::element_text(size = 10),
       legend.title =  ggplot2::element_text(face = "bold",
                                             size = 9),
@@ -203,7 +189,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
       axis.title = ggplot2::element_blank(),
       axis.ticks.x = ggplot2::element_blank(),
       axis.ticks.y = ggplot2::element_blank(),
-      panel.background = ggplot2::element_rect(fill = "lightblue", colour = NA),
+      panel.background = ggplot2::element_rect(fill = "lightblue", colour = NA), # par defaut la mer
       panel.grid.major = ggplot2::element_line(colour = NA),
       panel.grid.minor = ggplot2::element_line(colour = NA),
       legend.position = "right",
