@@ -1,5 +1,5 @@
 ---
-title: "Bilan zaza mensuel ONDE  \nObservatoire national des étiages  \nDépartement `r params$code_departement`"
+title: "Bilan mensuel ONDE  \nObservatoire national des étiages  \nDépartement `r params$code_departement`"
 author: "OFB, DR `r params$region_dr`"
 date: "Campagne `r params$type_rapport` de `r params$mois_rapport`  \nrapport créé le `r format(Sys.time(), '%d %B %Y')`"
 output: 
@@ -135,11 +135,6 @@ onde_bilan_ecoulement_annee_dpt <-
                                            "Donnée manquante"),
                             referentiel_onde = "Typologie départementale",
                             force_complementaire = T)
-```
-
-```{r}
-
-print("zaza")
 ```
 
 Actuellement, le **département `r params$code_departement`** est couvert par **`r nb_stations` stations** d'observations. 
