@@ -43,6 +43,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
                                     referentiel_onde = 'Typologie nationale',
                                     couleurs = onde_4mod,
                                     dptFR_shp = NULL) {
+
   if (is.null(code_departement)) {
     stop("code dpt manquant")
   }
@@ -115,6 +116,8 @@ produire_carte_statique <- function(onde_df_mois = NULL,
                couleurs = Couleur_4mod)
     }
 
+  browser()
+
   ggplot2::ggplot() +
     ggplot2::geom_sf(data = dptFR_shp , fill = "grey95") +
     ggplot2::geom_sf(data = dpt_shp,
@@ -161,7 +164,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
     ) +
     ggplot2::ggtitle(
       label = glue::glue(
-        'R\u00e9seau ONDE - {unique(onde_df_mois$libelle_departement)} - Campagne {unique(onde_df_mois$libelle_type_campagne)} {unique(lubridate::month(onde_df_mois$date_campagne,label = T, locale = \"fr_FR\"))} {unique(lubridate::year(onde_df_mois$date_campagne))}'
+        'R\u00e9seau ONDE - {unique(onde_df_mois$libelle_departement)} - Campagne {unique(onde_df_mois$libelle_type_campagne)} {unique(lubridate::month(onde_df_mois$date_campagne,label = T))} {unique(lubridate::year(onde_df_mois$date_campagne))}'
       ),
       subtitle = glue::glue('{referentiel_onde}')
     ) +
