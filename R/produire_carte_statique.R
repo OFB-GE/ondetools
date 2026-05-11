@@ -76,6 +76,12 @@ produire_carte_statique <- function(onde_df_mois = NULL,
       }
     })
 
+
+  pays_front <- sf::read_sf(dsn = "https://gisco-services.ec.europa.eu/distribution/v2/countries/geojson/CNTR_RG_01M_2024_4326.geojson") %>%
+    dplyr::filter(NAME_FREN %in% c("Italie", "Suisse", "Luxembourg", "Espagne", "Belgique", "Allemagne", "Andorre", "France")) %>%
+    sf::st_transform(crs = 2154)
+
+
   onde_df_mois <-
     onde_df_mois %>%
     dplyr::filter(code_departement == {
@@ -115,10 +121,23 @@ produire_carte_statique <- function(onde_df_mois = NULL,
                observations = stringr::str_wrap(lib_ecoul4mod, 12),
                couleurs = Couleur_4mod)
     }
+ # browser()
 
-  browser()
+  # if(code_departement %in% c(08)){
+  #   fond <- ggplot2::ggplot() +
+  #     ggplot2::geom_rect(data = dpt_shp,
+  #                        xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf,
+  #                        fill = "black")
+  # } else {
+  #   fond <- ggplot2::ggplot() +
+  #     ggplot2::geom_rect(data = dpt_shp,
+  #                        xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf,
+  #                        fill = "lightblue")
+  # }
+
 
   ggplot2::ggplot() +
+    ggplot2::geom_sf(data = pays_front , fill = "lightgrey") +
     ggplot2::geom_sf(data = dptFR_shp , fill = "grey95") +
     ggplot2::geom_sf(data = dpt_shp,
                      fill = "grey70",
@@ -174,6 +193,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
       legend.text = ggplot2::element_text(size = 10),
       legend.title =  ggplot2::element_text(face = "bold",
                                             size = 9),
+      legend.background = element_rect(colour = NA),
       plot.title = ggplot2::element_text(face = "bold",
                                          size = 10),
       plot.subtitle = ggplot2::element_text(face = "italic",
