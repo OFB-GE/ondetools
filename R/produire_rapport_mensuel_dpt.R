@@ -66,7 +66,7 @@ produire_rapport_mensuel_dpt <- function(onde_df,
 
   progressr::with_progress({
     p <- progressr::progressor(steps = length(code_departement))
-
+    # browser()
     furrr::future_walk(code_departement,
                        ~ {
                          p()

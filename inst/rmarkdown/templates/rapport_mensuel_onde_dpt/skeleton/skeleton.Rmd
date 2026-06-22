@@ -47,7 +47,7 @@ Une autre modalité - **<span custom-style="Ecoul_visible_faible">Ecoulement vis
 
 A noter que la modalité **observation impossible** peut également être renseignée, dès lors que l'observation n'a pu être réalisée correctement en raison de conditions exceptionnelles (problèmes d'accessibilité, modification des conditions environnementales de la station, etc ...).
 
-Pour plus d'informations : [Lien réseau ONDE (http://onde.eaufrance.fr)](https://onde.eaufrance.fr/).
+Pour plus d'informations : [Lien réseau ONDE (https://www.eaufrance.fr/observatoire-national-des-etiages)](https://www.eaufrance.fr/observatoire-national-des-etiages).
 
 # Nombre de stations ONDE dans le département `r params$code_departement`
 
@@ -153,7 +153,7 @@ Les cartes ci-dessous présentent les situations observées sur les stations du 
 
 Les modalités d'écoulement de la **typologie nationale** peuvent prendre les valeurs suivantes: *<span custom-style="Ecoulement_style">écoulement visible</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, *<span custom-style="Assec_style">assec</span>*, ou *observation impossible*.
 
-```{r map dpt nat, results='asis', echo=FALSE, crop=T, fig.width=5, fig.height=5, dpi=300}
+```{r map dpt nat, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5, dpi=300}
 produire_carte_statique(code_departement = params$code_departement,
                         onde_df_mois = onde_df_mois,
                         referentiel_onde = 'Typologie nationale',
@@ -240,7 +240,8 @@ indice_onde_tab %>%
   flextable::italic(part = 'header', i = 2) %>% 
   flextable::fontsize(size=8.5, part = c("all")) %>% 
   flextable::width(width = 0.5) %>% 
-  flextable::border_inner_v(part="all", border = flextable::fp_border_default(color="gray", width = 1) )
+  flextable::border_inner_v(part="all", border = flextable::fp_border_default(color="gray", width = 1)) %>%
+  flextable::autofit()
 ```
 
 \newpage
@@ -290,7 +291,8 @@ partA <-
 params$onde_df %>%
   dplyr::filter(code_departement == params$code_departement) %>% 
   calculer_assecs_heatmap(onde_df = .) %>% 
-  produire_graph_heatmap_assecs(heatmap_df = ., autoscale = T)
+  produire_graph_heatmap_assecs(heatmap_df = ., autoscale = T) +
+  ggplot2::theme(title = ggplot2::element_text(size = 9,face = 'bold'))
 
 partB <-
 ## graph b)
@@ -309,7 +311,8 @@ params$onde_df %>%
       ggplot2::scale_y_continuous(limits = c(0, max(.$pc_assec_usuelles) + 0.03), 
                                   labels= scales::percent_format(1)) +
       ggplot2::scale_x_continuous(breaks = scales::breaks_width(1)) +
-      ggplot2::labs(title = "Proportion moyenne annuelle des stations en assecs") +
+      ggplot2::labs(title = "Proportion moyenne annuelle des stations en assecs",
+                    subtitle = "Campagnes usuelles") +
       ggplot2::theme_bw() +
       ggplot2::theme(title = ggplot2::element_text(size = 9,face = 'bold'), 
                      axis.text.x = ggplot2::element_text(size=9, angle = 45, hjust = 1),
@@ -321,7 +324,10 @@ partC <-
 params$onde_df %>%
   dplyr::filter(code_departement == params$code_departement) %>% 
   calculer_recurrence_assecs(onde_df = .) %>% 
-  produire_graph_reccurrence_assecs(df_assecs = .)
+  produire_graph_reccurrence_assecs(df_assecs = .) +
+  ggplot2::labs(title = "Durée des assecs : Proportions et nombre de stations concernées",
+                    subtitle = "Campagnes usuelles") +
+  ggplot2::theme(title = ggplot2::element_text(size = 9,face = 'bold'))
 
 
 plot_historique <-
@@ -343,7 +349,7 @@ plot_historique
 
 Ci-dessous les stations ONDE du département sont réparties selon les **zones d'alerte Propluvia** auxquelles elles appartiennent (noms issus des  [données Propluvia](https://www.data.gouv.fr/fr/datasets/donnee-secheresse-propluvia/)). Pour chaque station, l'historique retrace les observations des campagnes usuelles et complémentaires avec la **typologie départementale** définie précédemment. 
 
-```{r historique stations, results='asis', echo=FALSE, dpi=300, fig.height= 3.3, fig.width= 5.5, message=FALSE}
+```{r historique stations, echo=FALSE, fig.height=3.3, fig.width=7, message=FALSE, dpi=300, results='asis'}
 onde_dpt <- 
   params$onde_df %>% 
   dplyr::filter(code_departement == params$code_departement) %>% 
