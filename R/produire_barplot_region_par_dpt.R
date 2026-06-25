@@ -18,8 +18,9 @@
 ## ---------------------------
 
 
-produire_barplot_region_par_dpt <- function(annee_mois = NULL,
-                                            region_dr = NULL,
+produire_barplot_region_par_dpt <- function(mois_sel,
+                                            annee_sel,
+                                            region_dr,
                                             referentiel_onde = 'Typologie nationale',
                                             complementaire = FALSE){
 
@@ -40,8 +41,8 @@ produire_barplot_region_par_dpt <- function(annee_mois = NULL,
   onde_df_R <- telecharger_donnees_onde_api(dpt = dptRegion$DEP)
 
   ### tableau pour le mois en cours selectionné
-  mois_sel <- format(lubridate::ym(annee_mois), "%m")
-  annee_sel <- format(lubridate::ym(annee_mois), "%Y")
+  # mois_sel <- format(lubridate::ym(annee_mois), "%m")
+  # annee_sel <- format(lubridate::ym(annee_mois), "%Y")
 
   onde_df_RDMA <- onde_df_R %>%
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%

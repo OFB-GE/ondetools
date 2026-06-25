@@ -200,7 +200,7 @@ produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_dpt,
 
 ## Typologie nationale
 
-```{r}
+```{r les autres dpts, echo=FALSE}
 
 ## il y a plusieurs possibilités :
 # - Soit dans le lancement, on fait expres de mettre un onde_df qui compte
@@ -208,11 +208,12 @@ produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_dpt,
 # - soit on recupere les departements de la region et on telecharge les données de la region
 # (avec quoi comme info ?)
 
-produire_barplot_region_par_dpt(annee_mois = NULL,
-                                            region_dr = NULL,
-                                            referentiel_onde = 'Typologie nationale',
-                                            # couleurs = onde_4mod,
-                                            complementaire = FALSE)
+produire_barplot_region_par_dpt(mois_sel = params$mois_rapport,
+                                annee_sel = params$annee_rapport,
+                                region_dr = params$region_dr,
+                                referentiel_onde = 'Typologie nationale',
+                                # couleurs = onde_4mod,
+                                complementaire = FALSE)
 
 ```
 
