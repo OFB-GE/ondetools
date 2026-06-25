@@ -134,6 +134,7 @@ produire_graph_type_ecoulement <- function(data_bilan,
 
   } else {
 
+    # browser()
     data_bilan <-
       data_bilan %>%
       dplyr::ungroup() %>%

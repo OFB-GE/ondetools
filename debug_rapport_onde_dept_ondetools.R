@@ -102,7 +102,6 @@ zaza <- produire_carte_statique(onde_df_mois = onde_df_mois,
 
 # devtools::install_github("richaben/ondetools")
 
-
 # Quitting from skeleton.Rmd:288-340 [historique]
 # erreur le 22/06/26 - sans aucuns changements par rapport au lancement d'avant... (rapport mai 2026...)
 # pas de pb sur part1, ni sur part B, ni sur part C (aie aie), ni sur plot_historique !!
