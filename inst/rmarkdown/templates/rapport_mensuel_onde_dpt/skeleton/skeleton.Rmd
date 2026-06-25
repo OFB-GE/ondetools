@@ -211,7 +211,7 @@ produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_dpt,
 produire_barplot_region_par_dpt(annee_mois = NULL,
                                             region_dr = NULL,
                                             referentiel_onde = 'Typologie nationale',
-                                            couleurs = onde_4mod,
+                                            # couleurs = onde_4mod,
                                             complementaire = FALSE)
 
 ```
