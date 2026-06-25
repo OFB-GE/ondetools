@@ -135,6 +135,7 @@ onde_bilan_ecoulement_annee_dpt <-
                                            "Donnée manquante"),
                             referentiel_onde = "Typologie départementale",
                             force_complementaire = T)
+
 ```
 
 Actuellement, le **département `r params$code_departement`** est couvert par **`r nb_stations` stations** d'observations. 
@@ -194,6 +195,27 @@ produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_dpt,
 ```
 
 \newpage
+
+# Bilan des écoulements pour les autres départements de la région
+
+## Typologie nationale
+
+```{r}
+
+## il y a plusieurs possibilités :
+# - Soit dans le lancement, on fait expres de mettre un onde_df qui compte
+# tous les departements et on obtient donc le tableau directement
+# - soit on recupere les departements de la region et on telecharge les données de la region
+# (avec quoi comme info ?)
+
+produire_barplot_region_par_dpt(annee_mois = NULL,
+                                            region_dr = NULL,
+                                            referentiel_onde = 'Typologie nationale',
+                                            couleurs = onde_4mod,
+                                            complementaire = FALSE)
+
+```
+
 
 # Analyse pluriannuelle à l'échelle départementale
 ## Indices ONDE

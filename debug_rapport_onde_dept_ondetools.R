@@ -31,7 +31,7 @@ mes_dpts <- as.character(c("01","02","03","04","05", "06","07", "08", "09", "10"
 # mes_dpts <- c("88", "08") # 27/08/25
 
 
-mes_dpts <- c("57")
+mes_dpts <- c("57", "67")
 
 
 ## 2) Télécharger les données onde
@@ -155,4 +155,17 @@ for (j in 1:length(libelle_propluvia_dpt)){
   cat('\n')
 }
 
+
+######## construction preoduire barplot region
+
+mes_dpts <- c("57", "67")
+
+## 2) Télécharger les données onde
+onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
+# c'est dommage de devoir telecharger toutes les dates
+# il ne bloque pas l'annee pour avoir la possibilite de faire l'historique.
+
+annee_mois = "2026-05"
+region_dr = 'Grand Est'
+complementaire = FALSE
 
