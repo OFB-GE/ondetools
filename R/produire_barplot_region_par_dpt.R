@@ -24,12 +24,23 @@ produire_barplot_region_par_dpt <- function(mois_sel,
                                             referentiel_onde = 'Typologie nationale',
                                             complementaire = FALSE){
 
-  browser()
-
-  print(region_dr)
-
 
   if(complementaire == TRUE) {type_rapport <- "compl\u00e9mentaire"} else {type_rapport <- "usuelle"}
+
+  if(referentiel_onde == 'Typologie nationale') {
+    mod <- c("Ecoulement visible",
+             "Ecoulement non visible",
+             "Assec",
+             "Observation impossible",
+             "Donnée manquante")
+  } else {
+    mod <- c("Ecoulement visible acceptable",
+             "Ecoulement visible faible",
+             "Ecoulement non visible",
+             "Assec",
+             "Observation impossible",
+             "Donnée manquante")
+    }
 
   # recuperer les departements de la region
   dptRegion <- COGiter::regions %>%
@@ -40,24 +51,19 @@ produire_barplot_region_par_dpt <- function(mois_sel,
   # recuperer les données concernees (departement, annee et mois)
   onde_df_R <- telecharger_donnees_onde_api(dpt = dptRegion$DEP)
 
-  ### tableau pour le mois en cours selectionné
-  # mois_sel <- format(lubridate::ym(annee_mois), "%m")
-  # annee_sel <- format(lubridate::ym(annee_mois), "%Y")
+  # mois_sel = "05"
 
   onde_df_RDMA <- onde_df_R %>%
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%
     dplyr::filter(libelle_type_campagne == type_rapport) %>%
     dplyr::filter(Mois == mois_sel & Annee == annee_sel)
 
+
   # calculer les nombres de stations par modalite et par departement
-  data_bilan_ecoulement <- calculer_bilan_ecoulement(onde_df = onde_df_RDMA,
+  data_bilan_ecoulement <- onde_df_RDMA %>%
+    calculer_bilan_ecoulement(onde_df = .,
                             mod = lib_ecoul,
-                            mod_levels = c("Ecoulement visible acceptable",
-                                           "Ecoulement visible faible",
-                                           "Ecoulement non visible",
-                                           "Assec",
-                                           "Observation impossible",
-                                           "Donnée manquante"),
+                            mod_levels = mod,
                             referentiel_onde = referentiel_onde,
                             force_complementaire = complementaire) # %>%
                             #mutate(code_departement = as.factor(code_departement))
@@ -80,7 +86,7 @@ produire_barplot_region_par_dpt <- function(mois_sel,
     # script copié de la fonction produire_graph_type_ecoulement
   # le 24/06/2026 version 0.1.2
 
-  data_bilan_ecoulement %>%
+  graph_barplot <- data_bilan_ecoulement %>%
     ggplot2::ggplot(
       mapping = ggplot2::aes(
         y = frq,
@@ -110,7 +116,7 @@ produire_barplot_region_par_dpt <- function(mois_sel,
     ggplot2::ylab("Pourcentage (%)") +
     ggplot2::xlab(NULL) +
     ggplot2::labs(title = glue::glue("Types d\'\u00e9coulements par d\u00e9partement au {glue::glue_collapse(c(mois_sel, annee_sel), sep = ' / ')} \n R\u00e9gion {region_dr}"),
-                  subtitle = glue::glue('{unique(data_bilan$Typologie)}'),
+                  subtitle = glue::glue('{unique(data_bilan_ecoulement$Typologie)}'),
                   x = "D\u00e9partements") +
     ggplot2::scale_fill_manual(
       name = "Situation stations",
