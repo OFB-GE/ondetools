@@ -23,6 +23,10 @@ produire_barplot_region_par_dpt <- function(annee_mois = NULL,
                                             referentiel_onde = 'Typologie nationale',
                                             complementaire = FALSE){
 
+  browser()
+
+  print(region_dr)
+
 
   if(complementaire == TRUE) {type_rapport <- "compl\u00e9mentaire"} else {type_rapport <- "usuelle"}
 

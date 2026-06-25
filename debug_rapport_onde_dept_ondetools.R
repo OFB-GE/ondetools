@@ -18,7 +18,7 @@
 
 # remotes::install_github("OFB-GE/ondetools")
 
-# remotes::install_github("OFB-GE/ondetools@test_graph_ecoulement_dpt_region")
+remotes::install_github("OFB-GE/ondetools@test_graph_ecoulement_dpt_region")
 #
 # install.packages("C:\Users\julie.gueguen\Documents\3_Onde\debug_ondetools_rapportSD\ondetools", type = "source")
 # devtools::install("C:\Users\julie.gueguen\Documents\3_Onde\debug_ondetools_rapportSD\ondetools")
@@ -54,7 +54,7 @@ produire_rapport_mensuel_dpt(
   onde_df = onde_df,
   code_departement = mes_dpts,
   annee_mois = "2026-05",
-  region_dr = 'Grand Est',
+  region_dr = 'Grand Est', # attention orthographe très importante !
   complementaire = FALSE,
   dossier_sortie = "./output"
 )
