@@ -36,8 +36,9 @@ mes_dpts <- as.character(c("01","02","03","04","05", "06","07", "08", "09", "10"
 # mes_dpts <- c("88", "08") # 27/08/25
 
 
-mes_dpts <- c("57", "67")
+mes_dpts <- c("57")
 
+mes_dpts <- c("67","88") # au 29/06/26
 
 ## 2) Télécharger les données onde
 onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
@@ -50,10 +51,16 @@ table(onde_df$code_departement)
 #
 # table(onde_df$code_ecoulement, useNA = "ifany")
 
+onde_df %>%
+  filter(Annee == 2026 & month(date_observation) == 6) %>%
+  group_by(code_departement) %>%
+  summarise(nb_station = n())
+
+
 produire_rapport_mensuel_dpt(
   onde_df = onde_df,
   code_departement = mes_dpts,
-  annee_mois = "2026-05",
+  annee_mois = "2026-06",
   region_dr = 'Grand Est', # attention orthographe très importante !
   complementaire = FALSE,
   dossier_sortie = "./output"

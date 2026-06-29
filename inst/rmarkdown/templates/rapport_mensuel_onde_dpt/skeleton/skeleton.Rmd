@@ -264,8 +264,8 @@ indice_onde_tab %>%
   flextable::italic(part = 'header', i = 2) %>% 
   flextable::fontsize(size=8.5, part = c("all")) %>% 
   flextable::width(width = 0.5) %>% 
-  flextable::border_inner_v(part="all", border = flextable::fp_border_default(color="gray", width = 1)) %>%
-  flextable::autofit()
+  flextable::border_inner_v(part="all", border = flextable::fp_border_default(color="gray", width = 1)) #%>%
+  # flextable::autofit()
 ```
 
 \newpage
