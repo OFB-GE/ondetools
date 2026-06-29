@@ -148,4 +148,7 @@ produire_barplot_region_par_dpt <- function(mois_sel,
     ggplot2::guides(
       fill = ggplot2::guide_legend(nrow = 2, byrow = TRUE)
     )
+
+  return(graph_barplot)
+
 }
