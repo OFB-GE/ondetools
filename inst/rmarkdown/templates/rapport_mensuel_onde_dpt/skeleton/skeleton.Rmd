@@ -218,6 +218,8 @@ produire_barplot_region_par_dpt(mois_sel = mois,
 
 ```
 
+*Remarque : En fonction de la date d'édition du rapport, il est possible que tout les départements n'apparaissent pas.*
+
 
 # Analyse pluriannuelle à l'échelle départementale
 ## Indices ONDE

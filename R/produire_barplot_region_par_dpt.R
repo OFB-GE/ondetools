@@ -115,9 +115,10 @@ produire_barplot_region_par_dpt <- function(mois_sel,
     ggplot2::coord_flip() +
     ggplot2::ylab("Pourcentage (%)") +
     ggplot2::xlab(NULL) +
-    ggplot2::labs(title = glue::glue("Types d\'\u00e9coulements par d\u00e9partement au {glue::glue_collapse(c(mois_sel, annee_sel), sep = ' / ')} \n R\u00e9gion {region_dr}"),
+    ggplot2::labs(title = glue::glue("Types d\'\u00e9coulements par d\u00e9partement - - Campagne {unique(onde_df_RDMA$libelle_type_campagne)} {unique(lubridate::month(onde_df_RDMA$date_campagne,label = T))} {unique(lubridate::year(onde_df_RDMA$date_campagne))} \n R\u00e9gion {region_dr}"),
                   subtitle = glue::glue('{unique(data_bilan_ecoulement$Typologie)}'),
-                  x = "D\u00e9partements") +
+                  x = "D\u00e9partements",
+                  caption = paste("Source: ONDE (OFB)\n \u00a9OFB", format(Sys.time(), '%Y'), "- Date d\'\u00e9dition:", format(Sys.time(), '%d/%m/%Y'))) +
     ggplot2::scale_fill_manual(
       name = "Situation stations",
       values = c("Ecoulement visible" = "#4575b4",

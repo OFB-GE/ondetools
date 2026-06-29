@@ -27,29 +27,14 @@ require(tidyverse)
 library(ondetools)
 
 ## 2) Choisir ses départements
-mes_dpts <- as.character(c("01","02","03","04","05", "06","07", "08", "09", "10"))
-#mes_dpts <- c("08","51","54","67","88") # le 27/06
-# mes_dpts <- c("10") # 30/06
-#mes_dpts <- c("55") # 30/06
-#mes_dpts <- c("68") # 16/07 - campagne complementaire 10/07 ?
-# mes_dpts <- c("67") # 16/07 - campagne complementaire 10/07 ?
-# mes_dpts <- c("88", "08") # 27/08/25
+mes_dpts <- as.character(c("08","10","51","52","54", "55","57", "67", "68", "88"))
 
-
-mes_dpts <- c("57")
-
-mes_dpts <- c("67","88") # au 29/06/26
+mes_dpts <- as.character(c("52"))
 
 ## 2) Télécharger les données onde
 onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
 
 table(onde_df$code_departement)
-# pb 08, 10
-
-# tmp <- onde_df %>%
-#   filter(date_observation == 	"2025-06-26")
-#
-# table(onde_df$code_ecoulement, useNA = "ifany")
 
 onde_df %>%
   filter(Annee == 2026 & month(date_observation) == 6) %>%
