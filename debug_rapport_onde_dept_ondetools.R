@@ -28,6 +28,7 @@ library(ondetools)
 
 ## 2) Choisir ses départements
 mes_dpts <- as.character(c("08","10","51","52","54", "55","57", "67", "68", "88"))
+mes_dpts <- as.character(c("10","57", "68"))
 
 ## 2) Télécharger les données onde
 onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)

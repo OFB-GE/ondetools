@@ -277,6 +277,8 @@ indice_onde_tab %>%
 indice_onde_tab %>%
   dplyr::mutate(Mois = format(date_campagne, "%m")) %>%
   dplyr::filter(Mois == mois_sel) %>%
+  arrange(Annee) %>%
+  ungroup() %>%
   ggplot2::ggplot(.,
                 ggplot2::aes(x = Annee, y = indice,label = indice)) +
   ggplot2::geom_path(color = "grey") +
