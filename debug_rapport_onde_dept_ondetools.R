@@ -29,21 +29,22 @@ library(ondetools)
 ## 2) Choisir ses départements
 mes_dpts <- as.character(c("08","10","51","52","54", "55","57", "67", "68", "88"))
 
-mes_dpts <- as.character(c("52"))
-
 ## 2) Télécharger les données onde
 onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
 
 table(onde_df$code_departement)
 
-onde_df %>%
+zaza <- onde_df %>%
   filter(Annee == 2026 & month(date_observation) == 6) %>%
   group_by(code_departement) %>%
   summarise(nb_station = n())
 
+mes_dpts <- as.character(zaza$code_departement)
+onde_df_select <- telecharger_donnees_onde_api(dpt = mes_dpts)
+
 
 produire_rapport_mensuel_dpt(
-  onde_df = onde_df,
+  onde_df = onde_df_select,
   code_departement = mes_dpts,
   annee_mois = "2026-06",
   region_dr = 'Grand Est', # attention orthographe très importante !
