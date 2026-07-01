@@ -167,3 +167,46 @@ annee_mois = "2026-05"
 region_dr = 'Grand Est'
 complementaire = FALSE
 
+### plot indices par annees
+
+mes_dpts <- "10"
+onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
+
+
+indice_onde_tab <-
+  onde_df %>%
+  dplyr::filter(code_departement == mes_dpts) %>%
+  ondetools::calculer_indice_onde(onde_df = ., force_complementaire = T)
+
+
+indice_onde_tab %>%
+  dplyr::mutate(Mois = format(date_campagne, "%m")) %>%
+  dplyr::filter(Mois == "06") %>%
+  arrange(Annee) %>%
+  ungroup() %>%
+  ggplot2::ggplot(.,
+                  ggplot2::aes(x = Annee, y = indice,label = indice)) +
+  ggplot2::geom_path(color = "grey") +
+  ggplot2::geom_point(shape = 21, color = "black", size = 2,
+                      ggplot2::aes(fill = libelle_type_campagne)) +
+  # ggplot2::scale_x_date(breaks = "1 year", date_labels = "%Y") +
+  ggplot2::scale_x_continuous(breaks  = c(2012 : lubridate::year(Sys.Date())),
+                              labels = c(2012 : lubridate::year(Sys.Date()))) +
+  ggplot2::scale_y_continuous(breaks = c(5:10),limits = c(5,10)) +
+  ggplot2::scale_fill_manual(values = c("usuelle" = "#0077B6", "complémentaire" = "#48CAE4"), name = "",
+                             labels = c("Campagne usuelle", "Campagne complémentaire")) +
+  ggplot2::labs(x = paste0("Années de campagnes ONDE (mois de ", lab_moisAVoir,")"), y = "Valeurs d'indice",
+                caption = paste0("Données Onde, au ", Sys.Date()),
+                title = paste0("Notes d'indice pour le département (", lab_moisAVoir," 2012 - ",lubridate::year(Sys.Date()),")")) +
+  ggrepel::geom_text_repel(aes(label = indice), color = "grey60",
+                           segment.color = 'grey50') +
+  ggplot2::theme(text = ggplot2::element_text(size = 12),
+                 axis.text = ggplot2::element_text(size = 12),
+                 axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5),
+                 strip.text = ggplot2::element_text(size = 12, color = "black", face = "bold"),
+                 strip.background = ggplot2::element_rect(fill = "white"),
+                 legend.box = "horizontal",
+                 legend.position = c(0.5, 0.20))
+
+
+
