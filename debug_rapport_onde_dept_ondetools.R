@@ -28,28 +28,44 @@ library(ondetools)
 
 ## 2) Choisir ses départements
 mes_dpts <- as.character(c("08","10","51","52","54", "55","57", "67", "68", "88"))
-mes_dpts <- as.character(c("10","57", "68"))
 
 ## 2) Télécharger les données onde
 onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
 
+# ?hubeau::get_ecoulement_observations()
+
+onde_df_hubeau <- hubeau::get_ecoulement_campagnes(
+  code_departement = c("08","10"),
+  date_campagne_min = "2026-07-01",
+  date_campagne_max = "2026-07-31"
+)
+
 table(onde_df$code_departement)
 
 zaza <- onde_df %>%
-  filter(Annee == 2026 & month(date_observation) == 6) %>%
+  filter(Annee == 2026 & month(date_observation) == 7 & libelle_type_campagne == "usuelle") %>%
   group_by(code_departement) %>%
   summarise(nb_station = n())
+zaza
 
 mes_dpts <- as.character(zaza$code_departement)
-onde_df_select <- telecharger_donnees_onde_api(dpt = mes_dpts)
-
+# onde_df_select <- telecharger_donnees_onde_api(dpt = mes_dpts)
 
 produire_rapport_mensuel_dpt(
-  onde_df = onde_df_select,
+  onde_df = onde_df,
   code_departement = mes_dpts,
-  annee_mois = "2026-06",
+  annee_mois = "2026-07",
   region_dr = 'Grand Est', # attention orthographe très importante !
   complementaire = FALSE,
+  dossier_sortie = "./output"
+)
+
+produire_rapport_mensuel_dpt(
+  onde_df = onde_df,
+  code_departement = mes_dpts,
+  annee_mois = "2026-07",
+  region_dr = 'Grand Est',
+  complementaire = TRUE,
   dossier_sortie = "./output"
 )
 

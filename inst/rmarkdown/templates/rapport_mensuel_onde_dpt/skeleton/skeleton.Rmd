@@ -290,9 +290,9 @@ indice_onde_tab %>%
   ggplot2::scale_y_continuous(breaks = c(5:10),limits = c(5,10)) +
   ggplot2::scale_fill_manual(values = c("usuelle" = "#0077B6", "complémentaire" = "#48CAE4"), name = "",
                              labels = c("Campagne usuelle", "Campagne complémentaire")) +
-  ggplot2::labs(x = paste0("Années de campagnes ONDE (mois de ", lab_moisAVoir,")"), y = "Valeurs d'indice",
+  ggplot2::labs(x = paste0("Années de campagnes ONDE (mois de ", format(date_campagne, "%m"),")"), y = "Valeurs d'indice",
                 caption = paste0("Données Onde, au ", Sys.Date()),
-                title = paste0("Notes d'indice pour le département (", lab_moisAVoir," 2012 - ",lubridate::year(Sys.Date()),")")) +
+                title = paste0("Notes d'indice pour le département (", format(date_campagne, "%m")," 2012 - ",lubridate::year(Sys.Date()),")")) +
   ggrepel::geom_text_repel(aes(label = indice), color = "grey60",
                            segment.color = 'grey50') +
   ggplot2::theme(text = ggplot2::element_text(size = 12),
