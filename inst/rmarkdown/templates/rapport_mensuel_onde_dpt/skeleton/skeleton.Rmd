@@ -57,8 +57,6 @@ Pour plus d'informations : [Lien réseau ONDE (https://www.eaufrance.fr/observat
 onde_df <- onde_df %>% 
   dplyr::mutate(code_campagne = as.numeric(code_campagne))
 
-lib_mois <- format(lubridate::ym(annee_mois), "%m")
-
 ### prétraitement sur le département
 nb_stations <- params$onde_df %>% 
   dplyr::filter(code_departement == params$code_departement & libelle_type_campagne == 'usuelle') %>% 
@@ -91,6 +89,8 @@ date_derniere_campagne_compl <- format(date_derniere_campagne_compl, '%d/%m/%Y')
 ### tableau pour le mois en cours selectionné
 mois_sel <- format(lubridate::ym(annee_mois), "%m")
 annee_sel <- format(lubridate::ym(annee_mois), "%Y")
+lib_mois <- month(lubridate::ym("2026-07"),label = TRUE,abbr = FALSE)
+
 
 onde_df_mois <-
   params$onde_df %>% 
@@ -291,9 +291,9 @@ indice_onde_tab %>%
   ggplot2::scale_y_continuous(breaks = c(5:10)) +
   ggplot2::scale_fill_manual(values = c("usuelle" = "#0077B6", "complémentaire" = "#48CAE4"), name = "",
                              labels = c("Campagne usuelle", "Campagne complémentaire")) +
-  ggplot2::labs(x = paste0("Années de campagnes ONDE (mois de ", mois,")"), y = "Valeurs d'indice",
+  ggplot2::labs(x = paste0("Années de campagnes ONDE (mois de ", lib_mois,")"), y = "Valeurs d'indice",
                 caption = paste0("Données Onde, au ", Sys.Date()),
-                title = paste0("Notes d'indice pour le département (", mois," 2012 - ",lubridate::year(Sys.Date()),")")) +
+                title = paste0("Notes d'indice pour le département (", lib_mois," 2012 - ",lubridate::year(Sys.Date()),")")) +
   ggrepel::geom_text_repel(aes(label = indice), color = "grey60",
                            segment.color = 'grey50') +
   ggplot2::theme(text = ggplot2::element_text(size = 12),

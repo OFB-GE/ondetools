@@ -28,7 +28,7 @@ library(ondetools)
 
 ## 2) Choisir ses départements
 mes_dpts <- as.character(c("08","10","51","52","54", "55","57", "67", "68", "88"))
-# mes_dpts <- as.character(c("10","51"))
+mes_dpts <- as.character(c("10"))
 
 ## 2) Télécharger les données onde
 # onde_df <- telecharger_donnees_onde_api_dates(dpt = mes_dpts, date_min = "2026-08-01")
@@ -59,7 +59,7 @@ produire_rapport_mensuel_dpt(
 ## complementaire
 produire_rapport_mensuel_dpt(
   onde_df = onde_df,
-  code_departement = mes_dpts,
+  code_departement = "10", # mes_dpts
   annee_mois = "2026-08",
   region_dr = 'Grand Est',
   complementaire = TRUE,
