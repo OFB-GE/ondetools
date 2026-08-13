@@ -18,6 +18,19 @@
 ## ---------------------------
 
 
+#' Title
+#'
+#' @param mois_sel : Chaine de caracteres avec le numero du mois selectionné ex : "05"
+#' @param annee_sel : Chaine de caracteres avec l'année selectionnée
+#' @param region_dr : Chaine de caractere avec le nom de la région souhaité (attention à l’orthographe de la région)
+#' @param referentiel_onde : Chaiende caracteres avec pour savoir s'il faut utiliser la
+#' typologie nationale ou départementale. ('Typologie nationale' ou 'Typologie departementale')
+#' @param complementaire : Booleen s'il s'agit d'une campagne complémentaire ou pas.
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 produire_barplot_region_par_dpt <- function(mois_sel,
                                             annee_sel,
                                             region_dr,

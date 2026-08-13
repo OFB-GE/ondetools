@@ -84,7 +84,8 @@ produire_rapport_mensuel_dpt <- function(onde_df,
                              region_dr = region_dr,
                              annee_rapport = annee_rapport,
                              mois_rapport = mois_rapport,
-                             type_rapport = type_rapport
+                             type_rapport = type_rapport,
+                             complementaire = complementaire
                            )
                          )
                          cli::cli_alert_success(glue::glue("rapport {type_rapport} dpt. {.x} - p\u00e9riode {annee_mois} - OK !!! (cf. dossier {dossier_sortie})"))

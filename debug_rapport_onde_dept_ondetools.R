@@ -31,11 +31,12 @@ mes_dpts <- as.character(c("08","10","51","52","54", "55","57", "67", "68", "88"
 # mes_dpts <- as.character(c("10","51"))
 
 ## 2) Télécharger les données onde
-onde_df <- telecharger_donnees_onde_api_dates(dpt = mes_dpts, date_min = "2026-08-01")
+# onde_df <- telecharger_donnees_onde_api_dates(dpt = mes_dpts, date_min = "2026-08-01")
+onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
+
+## remarque : on a besoin de toutes les données car il y a des graphiques avec les historiques.
 
 table(onde_df$code_departement)
-
-
 
 zaza <- onde_df %>%
   filter(Annee == 2026 & month(date_observation) == 8 & libelle_type_campagne != "usuelle") %>%
@@ -55,10 +56,11 @@ produire_rapport_mensuel_dpt(
   dossier_sortie = "./output"
 )
 
+## complementaire
 produire_rapport_mensuel_dpt(
   onde_df = onde_df,
   code_departement = mes_dpts,
-  annee_mois = "2026-07",
+  annee_mois = "2026-08",
   region_dr = 'Grand Est',
   complementaire = TRUE,
   dossier_sortie = "./output"

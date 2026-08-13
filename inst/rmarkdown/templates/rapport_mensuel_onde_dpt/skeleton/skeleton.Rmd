@@ -12,6 +12,7 @@ params:
   mois_rapport: NULL
   region_dr: NULL
   type_rapport: NULL
+  complementaire: NULL
 ---
 
 ```{r setup, include=FALSE}
@@ -55,6 +56,8 @@ Pour plus d'informations : [Lien réseau ONDE (https://www.eaufrance.fr/observat
 ## 
 onde_df <- onde_df %>% 
   dplyr::mutate(code_campagne = as.numeric(code_campagne))
+
+lib_mois <- format(lubridate::ym(annee_mois), "%m")
 
 ### prétraitement sur le département
 nb_stations <- params$onde_df %>% 
@@ -210,13 +213,11 @@ produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_dpt,
 # - soit on recupere les departements de la region et on telecharge les données de la region
 # (avec quoi comme info ?)
 
-mois <- format(lubridate::ym(annee_mois), "%m")
-
-produire_barplot_region_par_dpt(mois_sel = mois,
+produire_barplot_region_par_dpt(mois_sel = mois_sel,
                                 annee_sel = params$annee_rapport,
                                 region_dr = params$region_dr,
                                 referentiel_onde = 'Typologie nationale',
-                                complementaire = FALSE)
+                                complementaire = params$complementaire)
 
 ```
 
@@ -287,12 +288,12 @@ indice_onde_tab %>%
   # ggplot2::scale_x_date(breaks = "1 year", date_labels = "%Y") +
   ggplot2::scale_x_continuous(breaks  = c(2012 : lubridate::year(Sys.Date())),
                               labels = c(2012 : lubridate::year(Sys.Date()))) +
-  ggplot2::scale_y_continuous(breaks = c(5:10),limits = c(5,10)) +
+  ggplot2::scale_y_continuous(breaks = c(5:10)) +
   ggplot2::scale_fill_manual(values = c("usuelle" = "#0077B6", "complémentaire" = "#48CAE4"), name = "",
                              labels = c("Campagne usuelle", "Campagne complémentaire")) +
-  ggplot2::labs(x = paste0("Années de campagnes ONDE (mois de ", mois_sel,")"), y = "Valeurs d'indice",
+  ggplot2::labs(x = paste0("Années de campagnes ONDE (mois de ", mois,")"), y = "Valeurs d'indice",
                 caption = paste0("Données Onde, au ", Sys.Date()),
-                title = paste0("Notes d'indice pour le département (", mois_sel," 2012 - ",lubridate::year(Sys.Date()),")")) +
+                title = paste0("Notes d'indice pour le département (", mois," 2012 - ",lubridate::year(Sys.Date()),")")) +
   ggrepel::geom_text_repel(aes(label = indice), color = "grey60",
                            segment.color = 'grey50') +
   ggplot2::theme(text = ggplot2::element_text(size = 12),
@@ -300,15 +301,14 @@ indice_onde_tab %>%
                  axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5),
                  strip.text = ggplot2::element_text(size = 12, color = "black", face = "bold"),
                  strip.background = ggplot2::element_rect(fill = "white"),
-                 legend.box = "horizontal",
-                 legend.position = c(0.5, 0.20))
+                 legend.box = "horizontal")
 
 ```
 
 
 \newpage
 
-## Historique des types d'écoulement
+## Historique des types d'écoulements
 
 Les pourcentages de chaque type d'écoulement selon la typologie départementale sont présentés ci-dessous par années, mois et campagnes (usuelles *usue* et complémentaires *comp*).
 

@@ -26,11 +26,11 @@
 #'
 #' ## pour un département
 #'
-#' telecharger_donnees_onde_api(dpt= c('14'))
+#' telecharger_donnees_onde_api_dates(dpt= c('14'), date_min = "2025-07-28")
 #'
 #' ## pour plusieurs départements
 #'
-#' telecharger_donnees_onde_api(dpt= c('02', '60', '80'))
+#' telecharger_donnees_onde_api_dates(dpt= c('02', '60', '80'), date_max = "2025-07-28")
 #' }
 
 telecharger_donnees_onde_api_dates <- function(dpt = NULL, date_min = "2012-01-01",
