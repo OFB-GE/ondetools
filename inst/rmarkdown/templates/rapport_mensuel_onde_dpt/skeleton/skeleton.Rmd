@@ -89,7 +89,7 @@ date_derniere_campagne_compl <- format(date_derniere_campagne_compl, '%d/%m/%Y')
 ### tableau pour le mois en cours selectionné
 mois_sel <- format(lubridate::ym(annee_mois), "%m")
 annee_sel <- format(lubridate::ym(annee_mois), "%Y")
-lib_mois <- month(lubridate::ym("2026-07"),label = TRUE,abbr = FALSE)
+lib_mois <- month(lubridate::ym(annee_mois),label = TRUE,abbr = FALSE)
 
 
 onde_df_mois <-
