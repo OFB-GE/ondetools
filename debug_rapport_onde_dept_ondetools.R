@@ -28,22 +28,15 @@ library(ondetools)
 
 ## 2) Choisir ses départements
 mes_dpts <- as.character(c("08","10","51","52","54", "55","57", "67", "68", "88"))
+# mes_dpts <- as.character(c("10","51"))
 
 ## 2) Télécharger les données onde
-onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
-
-# ?hubeau::get_ecoulement_observations()
-
-onde_df_hubeau <- hubeau::get_ecoulement_campagnes(
-  code_departement = c("08","10"),
-  date_campagne_min = "2026-07-01",
-  date_campagne_max = "2026-07-31"
-)
+onde_df <- telecharger_donnees_onde_api_dates(dpt = mes_dpts, date_min = "2026-08-01")
 
 table(onde_df$code_departement)
 
 zaza <- onde_df %>%
-  filter(Annee == 2026 & month(date_observation) == 7 & libelle_type_campagne == "usuelle") %>%
+  filter(Annee == 2026 & month(date_observation) == 8 & libelle_type_campagne != "usuelle") %>%
   group_by(code_departement) %>%
   summarise(nb_station = n())
 zaza
