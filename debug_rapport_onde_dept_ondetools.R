@@ -35,6 +35,8 @@ onde_df <- telecharger_donnees_onde_api_dates(dpt = mes_dpts, date_min = "2026-0
 
 table(onde_df$code_departement)
 
+
+
 zaza <- onde_df %>%
   filter(Annee == 2026 & month(date_observation) == 8 & libelle_type_campagne != "usuelle") %>%
   group_by(code_departement) %>%
