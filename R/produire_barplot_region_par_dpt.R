@@ -30,7 +30,7 @@
 #' @returns
 #' @export
 #'
-#' @examples
+#' @examples produire_barplot_region_par_dpt(mois_sel = "08", annee_sel = "2026", region_dr = 'Grand Est')
 produire_barplot_region_par_dpt <- function(mois_sel,
                                             annee_sel,
                                             region_dr,
@@ -62,7 +62,9 @@ produire_barplot_region_par_dpt <- function(mois_sel,
             left_join(COGiter::departements, by = join_by(REG))
 
   # recuperer les données concernees (departement, annee et mois)
-  onde_df_R <- telecharger_donnees_onde_api(dpt = dptRegion$DEP)
+  onde_df_R <- telecharger_donnees_onde_api_dates(dpt = dptRegion$DEP,
+                                                  date_min = paste(annee_sel, mois_sel, "01",sep = "-"),
+                                                  date_max =  paste(annee_sel, mois_sel, "31",sep = "-"))
 
   # mois_sel = "05"
 
