@@ -61,14 +61,22 @@ produire_barplot_region_par_dpt <- function(mois_sel,
             select(REG, NOM_REG) %>%
             left_join(COGiter::departements, by = join_by(REG))
 
+  browser()
+
+
   # recuperer les données concernees (departement, annee et mois)
+  # map pour eviter les probleme de memoire lors des telechargements via hubeau
+  # trycatch pour eviter les erreurs si les données ne sont pas disponibles
+  # sur certains departements (exemple cas des campagnes complementaires)
   onde_df_R <- dptRegion$DEP %>%
-                map(\(x) telecharger_donnees_onde_api_dates(dpt = x,
+                map(\(x) tryCatch(telecharger_donnees_onde_api_dates(dpt = x,
                                                             date_min = paste(annee_sel, mois_sel, "01",sep = "-"),
-                                                            date_max =  paste(annee_sel, mois_sel, "31",sep = "-"))) %>%
+                                                            date_max =  paste(annee_sel, mois_sel, "31",sep = "-")),
+                    error = function(e) NULL)) %>%
                 bind_rows()
 
   # mois_sel = "05"
+
 
   onde_df_RDMA <- onde_df_R %>%
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%
