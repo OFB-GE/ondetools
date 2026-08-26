@@ -62,16 +62,18 @@ produire_barplot_region_par_dpt <- function(mois_sel,
             left_join(COGiter::departements, by = join_by(REG))
 
   # recuperer les données concernees (departement, annee et mois)
-  onde_df_R <- telecharger_donnees_onde_api_dates(dpt = dptRegion$DEP,
-                                                  date_min = paste(annee_sel, mois_sel, "01",sep = "-"),
-                                                  date_max =  paste(annee_sel, mois_sel, "31",sep = "-"))
+  onde_df_R <- dptRegion$DEP %>%
+                map(\(x) telecharger_donnees_onde_api_dates(dpt = x,
+                                                            date_min = paste(annee_sel, mois_sel, "01",sep = "-"),
+                                                            date_max =  paste(annee_sel, mois_sel, "31",sep = "-"))) %>%
+                bind_rows()
 
   # mois_sel = "05"
 
   onde_df_RDMA <- onde_df_R %>%
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%
-    dplyr::filter(libelle_type_campagne == type_rapport) %>%
-    dplyr::filter(Mois == mois_sel & Annee == annee_sel)
+    dplyr::filter(libelle_type_campagne == type_rapport) #%>%
+    # dplyr::filter(Mois == mois_sel & Annee == annee_sel)
 
 
   # calculer les nombres de stations par modalite et par departement
