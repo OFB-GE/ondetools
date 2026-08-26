@@ -61,9 +61,6 @@ produire_barplot_region_par_dpt <- function(mois_sel,
             select(REG, NOM_REG) %>%
             left_join(COGiter::departements, by = join_by(REG))
 
-  browser()
-
-
   # recuperer les données concernees (departement, annee et mois)
   # map pour eviter les probleme de memoire lors des telechargements via hubeau
   # trycatch pour eviter les erreurs si les données ne sont pas disponibles
