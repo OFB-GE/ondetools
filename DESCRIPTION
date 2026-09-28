@@ -1,8 +1,8 @@
 Package: ondetools
 Type: Package
-Title: Package R pour traiter les données ONDE de suivi des étiages en France
-Version: 0.1.2
-Date: 2023-03-31
+Title: Package R pour traiter les données ONDE de suivi des étiages en France - modifications DR Grand Est
+Version: 0.1.3
+Date: 2026-09-28
 Authors@R: c(
     person("Pascal", "Irz", , "pascal.irz@ofb.gouv.fr", role = c("aut", "cre"),
            comment = c(ORCID = "00000-0002-2066-8935")),

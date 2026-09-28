@@ -27,7 +27,7 @@
 #' typologie nationale ou départementale. ('Typologie nationale' ou 'Typologie departementale')
 #' @param complementaire : Booleen s'il s'agit d'une campagne complémentaire ou pas.
 #'
-#' @returns
+#' @returns ggplot graphique
 #' @export
 #'
 #' @examples produire_barplot_region_par_dpt(mois_sel = "08", annee_sel = "2026", region_dr = 'Grand Est')
