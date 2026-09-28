@@ -2,7 +2,7 @@
 % Please edit documentation in R/produire_barplot_region_par_dpt.R
 \name{produire_barplot_region_par_dpt}
 \alias{produire_barplot_region_par_dpt}
-\title{Title}
+\title{produire_barplot_region_par_dpt}
 \usage{
 produire_barplot_region_par_dpt(
   mois_sel,
@@ -24,8 +24,11 @@ typologie nationale ou départementale. ('Typologie nationale' ou 'Typologie dep
 
 \item{complementaire}{: Booleen s'il s'agit d'une campagne complémentaire ou pas.}
 }
+\value{
+ggplot graphique
+}
 \description{
-Title
+produire_barplot_region_par_dpt
 }
 \examples{
 produire_barplot_region_par_dpt(mois_sel = "08", annee_sel = "2026", region_dr = 'Grand Est')

@@ -18,7 +18,7 @@
 ## ---------------------------
 
 
-#' Title
+#' produire_barplot_region_par_dpt
 #'
 #' @param mois_sel : Chaine de caracteres avec le numero du mois selectionné ex : "05"
 #' @param annee_sel : Chaine de caracteres avec l'année selectionnée
@@ -59,7 +59,7 @@ produire_barplot_region_par_dpt <- function(mois_sel,
   dptRegion <- COGiter::regions %>%
             filter(NOM_REG == region_dr) %>%
             select(REG, NOM_REG) %>%
-            left_join(COGiter::departements, by = join_by(REG))
+            left_join(COGiter::departements, by = dplyr::join_by(REG))
 
   # recuperer les données concernees (departement, annee et mois)
   # map pour eviter les probleme de memoire lors des telechargements via hubeau
@@ -68,14 +68,15 @@ produire_barplot_region_par_dpt <- function(mois_sel,
   onde_df_R <- dptRegion$DEP %>%
                 map(\(x) tryCatch(telecharger_donnees_onde_api_dates(dpt = x,
                                                             date_min = paste(annee_sel, mois_sel, "01", sep = "-"),
-                                                            # pb si on lance avant le 31 du mois selectionné (exmeple lancement le 28/09/2026)
+                                                            # pb si on lance avant le 31 du mois selectionné (exemple lancement le 28/09/2026)
                                                             # donc on fait le min entre la date de lancement et le 31.
-                                                            date_max =  min(paste(annee_sel, mois_sel, "31", sep = "-"), Sys.Date())),
+                                                            # dernier jour du mois : https://data-hacks.com/find-last-day-month-for-particular-date-r
+                                                            date_max =  min(ceiling_date(lubridate::ymd(paste(annee_sel, mois_sel, "01", sep = "-")), "month") - lubridate::day(1),
+                                                                            Sys.Date())),
                     error = function(e) NULL)) %>%
                 bind_rows()
 
   # mois_sel = "05"
-
 
   onde_df_RDMA <- onde_df_R %>%
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%
