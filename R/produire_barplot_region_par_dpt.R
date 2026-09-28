@@ -2,13 +2,13 @@
 ##
 ## Script name : produire_barplot_region_par_dpt.R
 ##
-## Purpose of script : Creer un barplot pour tous les departements de la region indiquée dans
-## la variable "region_dr" afin de permettre une comparaison des situations entre les départements.
+## Purpose of script : Creer un barplot pour tous les departements de la region indiqu\\u00e9ee dans
+## la variable "region_dr" afin de permettre une comparaison des situations entre les d\\u00e9epartements.
 ##
-## Author : Julie Guéguen
+## Author : Julie Gu\\u00e9eguen
 ##
-## Date de création : 2026-06-24
-## Date de dernière modification :
+## Date de cr\\u00e9eation : 2026-06-24
+## Date de dernière modification : 28/09/2026
 ##
 ## ---------------------------
 ##
@@ -30,6 +30,11 @@
 #' @returns ggplot graphique
 #' @export
 #'
+#' @importFrom dplyr filter select left_join mutate bind_rows
+#' @importFrom purrr map
+#' @importFrom lubridate ymd ceiling_date
+#' @import COGiter
+#'
 #' @examples produire_barplot_region_par_dpt(mois_sel = "08", annee_sel = "2026", region_dr = 'Grand Est')
 produire_barplot_region_par_dpt <- function(mois_sel,
                                             annee_sel,
@@ -45,38 +50,37 @@ produire_barplot_region_par_dpt <- function(mois_sel,
              "Ecoulement non visible",
              "Assec",
              "Observation impossible",
-             "Donnée manquante")
+             "Donn\\u00e9e manquante")
   } else {
     mod <- c("Ecoulement visible acceptable",
              "Ecoulement visible faible",
              "Ecoulement non visible",
              "Assec",
              "Observation impossible",
-             "Donnée manquante")
+             "Donn\\u00e9e manquante")
     }
 
   # recuperer les departements de la region
   dptRegion <- COGiter::regions %>%
-            filter(NOM_REG == region_dr) %>%
-            select(REG, NOM_REG) %>%
-            left_join(COGiter::departements, by = dplyr::join_by(REG))
+    dplyr::filter(NOM_REG == region_dr) %>%
+    dplyr::select(REG, NOM_REG) %>%
+    dplyr::left_join(COGiter::departements, by = dplyr::join_by(REG))
 
-  # recuperer les données concernees (departement, annee et mois)
+  # recuperer les donn\\u00e9ees concernees (departement, annee et mois)
   # map pour eviter les probleme de memoire lors des telechargements via hubeau
-  # trycatch pour eviter les erreurs si les données ne sont pas disponibles
+  # trycatch pour eviter les erreurs si les donn\\u00e9ees ne sont pas disponibles
   # sur certains departements (exemple cas des campagnes complementaires)
   onde_df_R <- dptRegion$DEP %>%
-                map(\(x) tryCatch(telecharger_donnees_onde_api_dates(dpt = x,
-                                                            date_min = paste(annee_sel, mois_sel, "01", sep = "-"),
-                                                            # pb si on lance avant le 31 du mois selectionné (exemple lancement le 28/09/2026)
-                                                            # donc on fait le min entre la date de lancement et le 31.
-                                                            # dernier jour du mois : https://data-hacks.com/find-last-day-month-for-particular-date-r
-                                                            date_max =  min(ceiling_date(lubridate::ymd(paste(annee_sel, mois_sel, "01", sep = "-")), "month") - lubridate::day(1),
-                                                                            Sys.Date())),
-                    error = function(e) NULL)) %>%
-                bind_rows()
-
-  # mois_sel = "05"
+    purrr::map(\(x) tryCatch(
+      telecharger_donnees_onde_api_dates(dpt = x,
+                                         date_min = paste(annee_sel, mois_sel, "01", sep = "-"),
+                                         # pb si on lance avant le 31 du mois selectionn\\u00e9e (exemple lancement le 28/09/2026)
+                                         # donc on fait le min entre la date de lancement et le 31.
+                                         # dernier jour du mois : https://data-hacks.com/find-last-day-month-for-particular-date-r
+                                         date_max =  min(lubridate::ceiling_date(lubridate::ymd(paste(annee_sel, mois_sel, "01", sep = "-")), "month") - lubridate::day(1),
+                                                         Sys.Date())),
+      error = function(e) NULL)) %>%
+    dplyr::bind_rows()
 
   onde_df_RDMA <- onde_df_R %>%
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%
@@ -108,7 +112,7 @@ produire_barplot_region_par_dpt <- function(mois_sel,
   #     )
   #   )
 
-    # script copié de la fonction produire_graph_type_ecoulement
+    # script copi\\u00e9e de la fonction produire_graph_type_ecoulement
   # le 24/06/2026 version 0.1.2
 
   graph_barplot <- data_bilan_ecoulement %>%

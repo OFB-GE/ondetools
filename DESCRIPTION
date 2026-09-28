@@ -45,7 +45,8 @@ Imports:
     stringr,
     tidyr,
     utils,
-    xml2
+    xml2,
+	COGiter
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: bzip2
