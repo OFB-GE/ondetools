@@ -67,8 +67,10 @@ produire_barplot_region_par_dpt <- function(mois_sel,
   # sur certains departements (exemple cas des campagnes complementaires)
   onde_df_R <- dptRegion$DEP %>%
                 map(\(x) tryCatch(telecharger_donnees_onde_api_dates(dpt = x,
-                                                            date_min = paste(annee_sel, mois_sel, "01",sep = "-"),
-                                                            date_max =  paste(annee_sel, mois_sel, "31",sep = "-")),
+                                                            date_min = paste(annee_sel, mois_sel, "01", sep = "-"),
+                                                            # pb si on lance avant le 31 du mois selectionné (exmeple lancement le 28/09/2026)
+                                                            # donc on fait le min entre la date de lancement et le 31.
+                                                            date_max =  min(paste(annee_sel, mois_sel, "31", sep = "-"), Sys.Date())),
                     error = function(e) NULL)) %>%
                 bind_rows()
 
