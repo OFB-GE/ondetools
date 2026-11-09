@@ -87,9 +87,9 @@ produire_barplot_region_par_dpt <- function(mois_sel,
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%
     dplyr::filter(libelle_type_campagne == type_rapport) %>%
     # pour permettre de gerer plusieurs campagnes dans le meme mois (surtout
-    # quand complementaire)
-    dplyr::filter(code_campagne == max(as.numeric(code_campagne)))#%>%
-    # dplyr::filter(Mois == mois_sel & Annee == annee_sel)
+    # quand complementaire) max(code_campagne) marche pas quand plusieurs dpt !
+    # dplyr::filter(code_campagne == max(as.numeric(code_campagne)))
+    filter(date_campagne > max(date_campagne) - 10)
 
 
   # calculer les nombres de stations par modalite et par departement
