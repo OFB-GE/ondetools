@@ -82,9 +82,13 @@ produire_barplot_region_par_dpt <- function(mois_sel,
       error = function(e) NULL)) %>%
     dplyr::bind_rows()
 
+  # browser()
   onde_df_RDMA <- onde_df_R %>%
     dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>%
-    dplyr::filter(libelle_type_campagne == type_rapport) #%>%
+    dplyr::filter(libelle_type_campagne == type_rapport) %>%
+    # pour permettre de gerer plusieurs campagnes dans le meme mois (surtout
+    # quand complementaire)
+    dplyr::filter(code_campagne == max(as.numeric(code_campagne)))#%>%
     # dplyr::filter(Mois == mois_sel & Annee == annee_sel)
 
 
